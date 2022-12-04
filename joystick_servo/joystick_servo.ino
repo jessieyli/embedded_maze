@@ -6,11 +6,13 @@ Servo myServo2;
 
 int servo1 = 3; // digital PWM pin servo1
 int servo2 = 5; // digital PWM pin servo2
-int joyX = 0;
-int joyY = 1; // analog pins for joystick
-int baseX = 770;
-int baseY = 790;
+int joyX = A0;
+int joyY = A1; // analog pins for joystick
+int baseX = 820;
+int baseY = 840;
+float tolerance = 0.01;
 void setup() {
+
   // attach servos to servo objects
   myServo1.attach(servo1);
   myServo2.attach(servo2);
@@ -28,14 +30,14 @@ void loop() {
 
   // scale the values to use with the servo
   if (valX > baseX) {
-    valX = map(valX, baseX, 1023, 90, 180);
+    valX = map(valX, baseX, 1023, 90, 105); // 15 degree restriction
   } else {
-    valX = map(valX, 0, baseX, 0, 90);
+    valX = map(valX, 0, baseX, 75, 90);
   }
    if (valY > baseY) {
-    valY = map(valY, baseY, 1023, 90, 180);
+    valY = map(valY, baseY, 1023, 90, 105);
   } else {
-    valY = map(valY, 0, baseY, 0, 90);
+    valY = map(valY, 0, baseY, 75, 90);
   }
 //  Serial.println(valX);
 //  Serial.println(valY);
@@ -43,5 +45,9 @@ void loop() {
   // set servo position
   myServo1.write(valX);
   myServo2.write(valY);
+
+  // use these lines to set servo positions at beginning
+//  myServo1.write(90);
+//  myServo2.write(90);
   delay(200);
 }
