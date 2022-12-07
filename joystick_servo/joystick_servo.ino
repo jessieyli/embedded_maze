@@ -11,12 +11,17 @@ int joyY = A1; // analog pins for joystick
 int baseX = 820;
 int baseY = 840;
 float tolerance = 0.01;
+
+int lightSensor = A2;
+
 void setup() {
 
   // attach servos to servo objects
   myServo1.attach(servo1);
   myServo2.attach(servo2);
+  Serial.begin(9600);
   while(!Serial);
+   Serial1.begin(9600);
 }
 
 void loop() {
@@ -27,6 +32,10 @@ void loop() {
   Serial.println(valX);
   Serial.print("y: ");
   Serial.println(valY);
+
+  // light sensor reading
+  int lightSensorReading = analogRead(lightSensor);
+  Serial.println(lightSensorReading);
 
   // scale the values to use with the servo
   if (valX > baseX) {
@@ -49,5 +58,10 @@ void loop() {
   // use these lines to set servo positions at beginning
 //  myServo1.write(90);
 //  myServo2.write(90);
+
+  // trigger light message
+  if (lightSensorReading < 200) {
+    Serial1.write("woohoo! congrats");
+  }
   delay(200);
 }
