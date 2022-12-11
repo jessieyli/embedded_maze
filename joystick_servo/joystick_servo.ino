@@ -13,12 +13,19 @@ int baseY = 840;
 float tolerance = 0.01;
 
 int lightSensor = A2;
+int joySw = 1;
+
+void changeState() {
+  Serial.println("Reset game");
+}
 
 void setup() {
 
   // attach servos to servo objects
   myServo1.attach(servo1);
   myServo2.attach(servo2);
+  pinMode(joySw, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(joySw), changeState, FALLING);
   Serial.begin(9600);
   while(!Serial);
    Serial1.begin(9600);
@@ -63,5 +70,8 @@ void loop() {
   if (lightSensorReading < 200) {
     Serial1.write("woohoo! congrats");
   }
+
+  Serial.println(digitalRead(joySw));
+  
   delay(200);
 }
