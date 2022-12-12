@@ -15,21 +15,24 @@ float tolerance = 0.01;
 
 int lightSensor = A2;
 int joySw = 1;
+
 // variables
 int valX, valY, lightReading;
-state CURRENT_STATE = (state) 1;
-int countdown = 3;
+state CURRENT_STATE;
+int countdown;
 int saved_clock;
 
 void changeState() {
-  CURRENT_STATE = (state) 1;
-  countdown = 3;
+//  CURRENT_STATE = (state) 1;
+  initialize_vars();
 }
 
 void initialize_vars() {
   CURRENT_STATE = (state) 1;
   countdown = 3;
   saved_clock = millis();
+  myServo1.write(90);
+  myServo2.write(90);
 }
 void setup() {
   // attach servos to servo objects
@@ -48,6 +51,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   update_inputs();
+  Serial.println(CURRENT_STATE);
   CURRENT_STATE = update_fsm(CURRENT_STATE, millis());
   delay(100);
 }
@@ -56,6 +60,15 @@ void update_inputs() {
   valX = analogRead(joyX);
   valY = analogRead(joyY);
   lightReading = analogRead(lightSensor);
+  Serial.print("x: ");
+  Serial.println(valX);
+  Serial.print("y: ");
+  Serial.println(valY);
+
+  // light sensor reading
+  //        lightReading = analogRead(lightSensor);
+  Serial.print("light: ");
+  Serial.println(lightReading);
 }
 
 state update_fsm(state cur_state, long mils) {
@@ -76,22 +89,14 @@ state update_fsm(state cur_state, long mils) {
       }
       break;
     case sIN_GAME:
-      if (lightReading < 200) {
+      if (lightReading < 80) {
         Serial1.write(5);
         next_state = sGAME_OVER;
       } else {
         Serial1.write(4);
-//        valX = analogRead(joyX);
-//        valY = analogRead(joyY);
-        Serial.print("x: ");
-        Serial.println(valX);
-        Serial.print("y: ");
-        Serial.println(valY);
+        //        valX = analogRead(joyX);
+        //        valY = analogRead(joyY);
 
-        // light sensor reading
-//        lightReading = analogRead(lightSensor);
-        Serial.print("light: ");
-        Serial.println(lightReading);
 
         // scale the values to use with the servo
         if (valX > baseX) {

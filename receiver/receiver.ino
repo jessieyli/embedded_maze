@@ -16,7 +16,7 @@ String disp2;
 
 void setup() {
   Serial.begin(9600);  // Initialize serial monitor
-  while (!Serial);     // Wait for serial monitor to start (need this for USB serial)
+  // while (!Serial);     // Wait for serial monitor to start (need this for USB serial)
   Serial1.begin(9600);
 
   lcd.begin(16, 2);
@@ -48,40 +48,49 @@ void setup() {
   WDT->INTENSET.bit.EW = 1;
 }
 
+void display_win() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Congrats!");
+  lcd.setCursor(0, 1);
+  lcd.print("You won!");
+}
+
+void display_in_progress() {
+  lcd.clear();
+  lcd.print("Game in progress");
+}
+
+void display_countdown(int n) {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Countdown: ");
+  lcd.setCursor(0, 1);
+  lcd.print(n);
+}
+
 void loop() {
-//  lcd.clear();
-//  lcd.setCursor(0, 0);
-//  lcd.print(disp1);
-  //put your main code here, to run repeatedly:
+  // put your main code here, to run repeatedly:
   if (Serial1.available() > 0) {
     b = Serial1.read();
     Serial.println(b);
     if (b == 5 && !hasWon) {
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Congrats!");
-      lcd.setCursor(0, 1);
-      lcd.print("You won!");
+      display_win();
       hasWon = true;
     }
     else if (b == 3 || b == 2 || b == 1) {
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Countdown: ");
-      lcd.setCursor(0, 1);
-      lcd.print(b);
+      display_countdown(b);
       hasWon = false;
       inProgress = false;
     }
     else if (b == 4 && !inProgress) {
-      lcd.clear();
-      lcd.print("Game in progress");
+      display_in_progress();
       inProgress = true;
     }
     // pet the watchdog
     WDT->CLEAR.reg = 0xA5;
 
-  } 
+  }
 }
 
 
