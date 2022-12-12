@@ -11,7 +11,6 @@ int joyX = A0;
 int joyY = A1; // analog pins for joystick
 int baseX = 820;
 int baseY = 840;
-float tolerance = 0.01;
 
 int lightSensor = A2;
 int joySw = 1;
@@ -23,7 +22,6 @@ int countdown;
 int saved_clock;
 
 void changeState() {
-//  CURRENT_STATE = (state) 1;
   initialize_vars();
 }
 
@@ -45,7 +43,6 @@ void setup() {
   Serial1.begin(9600);
 
   initialize_vars();
-
 }
 
 void loop() {
@@ -66,7 +63,6 @@ void update_inputs() {
   Serial.println(valY);
 
   // light sensor reading
-  //        lightReading = analogRead(lightSensor);
   Serial.print("light: ");
   Serial.println(lightReading);
 }
@@ -94,10 +90,6 @@ state update_fsm(state cur_state, long mils) {
         next_state = sGAME_OVER;
       } else {
         Serial1.write(4);
-        //        valX = analogRead(joyX);
-        //        valY = analogRead(joyY);
-
-
         // scale the values to use with the servo
         if (valX > baseX) {
           valX = map(valX, baseX, 1023, 90, 105); // 15 degree restriction
