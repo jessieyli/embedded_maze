@@ -121,6 +121,10 @@ state update_fsm(state cur_state, long mils) {
       Serial1.write(5);
       next_state = sGAME_OVER;
       break;
+    default:
+      Serial1.write(5);
+      next_state = sGAME_OVER;
+      break;
   }
   return next_state;
 }
