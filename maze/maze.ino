@@ -44,14 +44,14 @@ void setup() {
   Serial1.begin(9600);
 
   initialize_vars();
+  test_all_tests();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  update_inputs();
-  Serial.println(CURRENT_STATE);
-  CURRENT_STATE = update_fsm(CURRENT_STATE, millis());
-  delay(100);
+//  update_inputs();
+//  Serial.println(CURRENT_STATE);
+//  CURRENT_STATE = update_fsm(CURRENT_STATE, millis());
+//  delay(100);
 }
 
 void update_inputs() {
@@ -105,7 +105,7 @@ state update_fsm(state cur_state, long mils) {
       }
       break;
     case sIN_GAME:
-      if (lightReading < 80) {
+      if (lightReading < 210) {
         Serial1.write(5);
         next_state = sGAME_OVER;
       } else {

@@ -3,3 +3,6 @@ typedef enum {
   sIN_GAME = 2,
   sGAME_OVER = 3,
 } state;
+
+#define TESTING
+bool test_all_tests();
