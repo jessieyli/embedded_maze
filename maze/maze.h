@@ -4,5 +4,5 @@ typedef enum {
   sGAME_OVER = 3,
 } state;
 
-#define TESTING
-bool test_all_tests();
+//#define TESTING
+//bool test_all_tests();

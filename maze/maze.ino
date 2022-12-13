@@ -44,14 +44,14 @@ void setup() {
   Serial1.begin(9600);
 
   initialize_vars();
-  test_all_tests();
+//  test_all_tests();
 }
 
 void loop() {
-//  update_inputs();
-//  Serial.println(CURRENT_STATE);
-//  CURRENT_STATE = update_fsm(CURRENT_STATE, millis());
-//  delay(100);
+  update_inputs();
+  Serial.println(CURRENT_STATE);
+  CURRENT_STATE = update_fsm(CURRENT_STATE, millis());
+  delay(100);
 }
 
 void update_inputs() {
