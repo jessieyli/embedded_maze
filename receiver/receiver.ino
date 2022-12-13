@@ -48,6 +48,14 @@ void setup() {
   WDT->INTENSET.bit.EW = 1;
 }
 
+
+/*
+ * Des: A display function for the game over state. 
+ * Input: n/a
+ * Output: n/a
+ * Effect: Displays 'Congrats! You won!' to the LCD screen. 
+ * 
+ */
 void display_win() {
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -56,11 +64,25 @@ void display_win() {
   lcd.print("You won!");
 }
 
+/*
+ * Des: A display function for the in game state. 
+ * Input: n/a
+ * Output: n/a
+ * Effect: Displays 'Congrats! You won!' to the LCD screen. 
+ * 
+ */
 void display_in_progress() {
   lcd.clear();
   lcd.print("Game in progress");
 }
 
+/*
+ * Des: A display function for the in display countdown state. 
+ * Input: an int (3, 2, or 1) representing the number at which the countdown is at currently. 
+ * Output: n/a
+ * Effect: Displays 'Countdown: 3', 'Countdown: 2' or 'Countdown: 1' depending on the int input.  
+ * 
+ */
 void display_countdown(int n) {
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -93,13 +115,19 @@ void loop() {
   }
 }
 
-
+/*
+ * Des: a watchdog timer handler function that clears interrupt register flag and alerts user that connection has been lost between the two microcontrollers 
+ * Input: n/a 
+ * Output: n/a
+ * Effect: Displays "Connection lost?" to LCD screen
+ * 
+ */
 void WDT_Handler() {
   // Clear interrupt register flag
   // (reference register with WDT->register_name.reg)
   WDT->INTFLAG.reg = 1;
 
-  // Warn user that a watchdog reset may happen
+  // Warn user that a  reset may happen
   lcd.clear();
   lcd.print("Connection lost?");
   Serial.println("watch dog reset may happen");
