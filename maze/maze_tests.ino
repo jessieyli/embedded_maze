@@ -7,20 +7,11 @@ typedef struct {
 } state_inputs;
 
 /*
- * A struct to keep all 9 state variables in one place
- */
-typedef struct {
-  int saved_clock;
-  int countdown;
-} state_vars;
-
-/*
- * A struct to keep all 9 state variables in one place
+ * A struct to keep all state variables in one place
  */
 typedef struct {
   int valx;
   int valy;
-  int lxb;
   int joySW; 
   int lightReading;
   int countdown;
@@ -65,8 +56,6 @@ bool test_transition(state start_state,
   x = start_state_vars.x;
   y = start_state_vars.y;
   o = start_state_vars.o;
-  lxb = start_state_vars.lxb;
-  uxb = start_state_vars.uxb;
   level = start_state_vars.level;
   time_step = start_state_vars.time_step;
   saved_clock = start_state_vars.saved_clock;
