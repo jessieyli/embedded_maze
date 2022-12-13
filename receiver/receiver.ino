@@ -11,8 +11,6 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 bool hasWon = false;
 bool inProgress = false;
-String disp1;
-String disp2;
 
 void setup() {
   Serial.begin(9600);  // Initialize serial monitor
